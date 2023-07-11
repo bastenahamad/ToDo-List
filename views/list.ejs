@@ -1,0 +1,67 @@
+<%- include("header") -%>
+  <div class="row">
+    <div class="col-lg-3 d-flex flex-nowrap sidebar">
+      <div class="d-flex flex-column p-3 text-bg-dark" style="width: 350px;">
+        <div class="heading-sidebar">
+          <div class="align-items-center text-white">
+            <span class="fs-2"><i class="fa-solid fa-list-check fa-lg"></i> <span class="head-title">ToDo-List</span></span>
+          </div>
+        </div>
+        <hr>
+        <div class="nav nav-pills active flex-column mb-auto row">
+            
+          <div class="col-lg-12 nav-item">
+            <a href="/"><div role="button" class="nav-link text-white"><i class="fa-solid fa-home fa-lg"></i> Today</div></a>
+          </div>
+          <hr>
+
+          <div class="col-lg-12 foot-text nav-item">
+            <% for(var i=0; i<navbarList.length; i++) { %>
+              <div class="col-lg-12 nav-item">
+                <div class="row">
+                  <div class="col-lg-9">
+                    <a href="/<%= navbarList[i] %>"><div role="button" class="nav-link text-white"><i class="fa-solid fa-paperclip fa-lg"></i> <%= navbarList[i] %> </div></a>
+                  </div>
+                  <div class="col-lg-3">
+                    <form action="/delete" method="post">
+                      <button class="button-52 btn btn-dark" type="submit" name ="deleteList" value="<%= navbarList[i] %>" id="navbarList[i]"><i class="fa-solid fa-trash fa-md"></i></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            <% } %>
+            <form action="/" method="post">
+              <input type="text" class="list" placeholder="New list" name="newListIn" autocomplete="off" required>
+              <button type="submit" class="btn btn-dark rounded-circle btn-lg"><i class="fa-solid fa-plus"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="b-example-vr"></div>
+    </div>
+    
+    <div class="col-lg-9">
+      <div class="box" id="heading">
+        <h1> <%= listTitle %> </h1>
+      </div>
+    
+      <div class="box">
+        <% for (var i=0; i<newListItems.length; i++) { %>
+            <form action="/delete" method="post">
+              <div class="item">
+                <input type="checkbox" onchange="this.form.submit()" name="checkbox" value=<%= newListItems[i]._id %>>
+                <%=  newListItems[i].name %>
+              </div>
+              <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+            </form>
+        <% } %>
+    
+          <form class="item" action="/" method="post">
+            <input type="text" name="newItem" placeholder="New Item" autocomplete="off" required>
+            <button class="btn btn-dark rounded-circle btn-lg" type="submit" name="list" value=<%= listTitle %>><i class="fa-solid fa-plus"></i></button>
+          </form>
+      </div>
+    </div>
+  </div>
+<%- include("footer") -%>
